@@ -2,15 +2,15 @@
 Language: Cpp
 # BasedOnStyle:  LLVM
 AccessModifierOffset: -2
-AlignAfterOpenBracket: Align
+AlignAfterOpenBracket: BlockIndent # Changed from LLVM, to avoid uncessary git diffs
 AlignArrayOfStructures: None
 AlignConsecutiveMacros: None
 AlignConsecutiveAssignments: None
 AlignConsecutiveBitFields: None
 AlignConsecutiveDeclarations: None
 AlignEscapedNewlines: Right
-AlignOperands: Align
-AlignTrailingComments: true
+AlignOperands: DontAlign # Changed from LLVM, to avoid uncessary git diffs
+AlignTrailingComments: false # Changed from LLVM, to avoid uncessary git diffs
 AllowAllArgumentsOnNextLine: true
 AllowAllConstructorInitializersOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: true
@@ -27,8 +27,8 @@ AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: MultiLine
 AttributeMacros:
   - __capability
-BinPackArguments: true
-BinPackParameters: true
+BinPackArguments: false # Changed from LLVM, to avoid uncessary git diffs
+BinPackParameters: false # Changed from LLVM, to avoid uncessary git diffs
 BraceWrapping:
   AfterCaseLabel: false
   AfterClass: false
