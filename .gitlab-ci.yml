@@ -1,0 +1,39 @@
+stages:
+  - build
+  - tests
+
+cache:
+  - key: vcpkg
+    paths:
+      - .local/vcpkg
+  - key: cmake
+    paths:
+      - .local/cmake
+
+.archlinux-setup:
+  tags:
+    - docker
+  image: archlinux
+  before_script:
+    - pacman -Syu --noconfirm base-devel gdb valgrind git cmake curl unzip tar zip
+
+build:
+  extends: .archlinux-setup
+  stage: build
+  script:
+    - source .devenv/bash_init.sh
+    - bash vcpkg_install.sh
+    - cmake_prepare_release
+    - cmake_build_release
+  artifacts:
+    paths:
+      - .local/cmake/build
+
+tests:
+  extends: .archlinux-setup
+  stage: tests
+  dependencies:
+    - build
+  script:
+    - source .devenv/bash_init.sh
+    - ctest_release
