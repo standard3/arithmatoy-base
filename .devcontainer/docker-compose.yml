@@ -8,6 +8,4 @@ services:
     volumes:
       - ..:/workspace:cached
       - /var/run/docker.sock:/var/run/docker.sock
-      - ../.local/cmake-container:/workspace/.local/cmake:cached # Override to avoid conflict
-      - ../.local/vcpkg-container:/workspace/.local/vcpkg:cached # Override to avoid conflict
     command: sleep infinity
