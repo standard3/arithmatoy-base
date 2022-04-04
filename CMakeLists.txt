@@ -1,13 +1,37 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(hello_world)
+project(arithmatoy)
 
-add_library(hello_world src/hello_world.c)
-target_include_directories(hello_world PUBLIC src/include/)
-file(GLOB_RECURSE INCLUDE_FILES "src/include/*.h")
-set_target_properties(hello_world PROPERTIES PUBLIC_HEADER ${INCLUDE_FILES})
+add_library(
+  arithmatoy
+  src/arithmatoy.c
+)
+target_include_directories(
+  arithmatoy
+  PUBLIC src/include/
+)
+target_include_directories(
+  arithmatoy
+  PRIVATE src/
+)
+set_target_properties(
+  arithmatoy
+  PROPERTIES
+  PUBLIC_HEADER src/include/arithmatoy.h
+)
 
-install(TARGETS hello_world
+add_executable(
+  arithmatoy-cli
+  src/cli.c
+)
+target_include_directories(
+  arithmatoy-cli
+  PRIVATE src/include/ src/
+)
+target_link_libraries(arithmatoy-cli PRIVATE arithmatoy)
+
+install(
+  TARGETS arithmatoy arithmatoy-cli
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
@@ -16,14 +40,22 @@ install(TARGETS hello_world
 
 if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME) AND BUILD_TESTING)
   enable_testing()
-
-  add_executable(test_hello_world src/tests/test_hello_world.c)
-  target_link_libraries(test_hello_world PRIVATE hello_world)
-
   find_package(cmocka CONFIG REQUIRED)
-  target_link_libraries(test_hello_world PRIVATE cmocka::cmocka)
 
-  install(TARGETS test_hello_world)
+  foreach(test_file
+    test_utils
+    test_add
+    test_sub
+    test_mul
+  )
+    add_executable(${test_file} src/tests/${test_file}.c)
+    target_link_libraries(${test_file} PRIVATE arithmatoy)
+    target_include_directories(
+      ${test_file}
+      PRIVATE src/
+    )
+    target_link_libraries(${test_file} PRIVATE cmocka::cmocka)
 
-  add_test(NAME test_hello_world COMMAND test_hello_world)
+    add_test(NAME ${test_file} COMMAND ${test_file})
+  endforeach()
 endif()

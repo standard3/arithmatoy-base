@@ -25,9 +25,10 @@ build:
     - bash vcpkg_install.sh
     - cmake_prepare_release
     - cmake_build_release
+    - cmake_install_release
   artifacts:
     paths:
-      - .local/cmake/build
+      - .local/cmake/
 
 tests:
   extends: .archlinux-setup
@@ -37,3 +38,14 @@ tests:
   script:
     - source .devenv/bash_init.sh
     - ctest_release
+
+tests-non-regression:
+  extends: .archlinux-setup
+  stage: tests
+  dependencies:
+    - build
+  script:
+    - python -m venv .venv
+    - source .venv/bin/activate
+    - python -m pip install pytest
+    - python -m pytest -s
