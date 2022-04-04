@@ -57,6 +57,14 @@ cmake_install() {
   cmake --build $CMAKE_BUILD -j --target install "$@"
 }
 
+cmake_install_release() {
+  cmake_install --config Release
+}
+
+cmake_install_debug() {
+  cmake_install --config Debug
+}
+
 ctest_release() {
   cmake_build_release
   ctest --test-dir $CMAKE_BUILD -C Release -V
