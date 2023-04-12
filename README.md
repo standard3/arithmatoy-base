@@ -88,6 +88,9 @@ python -m pytest tests/test_tp.py -k test_facto_ite
 python -m pytest tests/test_tp.py -k test_facto_rec
 python -m pytest tests/test_tp.py -k test_fibo_rec
 python -m pytest tests/test_tp.py -k test_fibo_ite
+python -m pytest tests/test_tp.py -k test_golden_phi
+python -m pytest tests/test_tp.py -k test_sqrt5
+python -m pytest tests/test_tp.py -k test_pow
 ```
 
 Pour débugguer vous pouvez mettre des `print` dans vos tests et lancer avec l'option `-s`, par exemple: `python -m pytest tests/test_tp.py -k test_nombre_entier -s`
