@@ -30,23 +30,31 @@ Afin de créer et me soumettre ce fichier:
 - Créez le fichier vous concernant dans le dossier `rendu`
 - Pour le HASH_DU_COMMIT vous serez amené à le changer au fur à mesure que vous avancez. Pour obtenir le hash sur commit sur lequel vous êtes:
   - `git rev-parse HEAD`
-- Faites un commit `git commit -m "Ajout fichier rendu"`
+- Faites un commit `git add .` puis `git commit -m "Ajout fichier rendu"`
 - Pushez `git push`
 - Allez sur Gitlab et créez une merge request: https://gitlab.com/maths-2600/arithmatoy-base/-/merge_requests
+  - En haut Gitlab vous propose des branches, cliquez sur "Change branches"
+  - Choisissez comme "Source branch" la branche `rendu` de votre repository
+  - Choisissez comme "Target branch" la branche `rendu` du repository de base `maths-2600/arithmatoy-base`
+  - Choisissez comme titre "Rendu [NOM] [prénom]"
+  - Cliquez sur "Create merge request" en bas
 
 Replacez vous ensuite sur la branche `main` pour continuer à travailler: `git checkout main`.
 
-Au fur à mesure que vous avancez, commitez et pushez votre travail. Dès que vous avez assez avancé, vous pouvez vous remettre sur la branche de rendu pour mettre à jour le hash du commit:
+Au fur à mesure que vous avancez, commitez et pushez votre travail sur `main`. Dès que vous aurez assez avancé, vous pourrez vous remettre sur la branche de rendu pour mettre à jour le hash du commit:
 
-- `git rev-parse HEAD` pour copier coller le hash de commit
+- `git rev-parse HEAD` pour copier coller le hash de commit (qui est sur votre branche `main`)
 - `git checkout rendu`
 - Mettez le hash dans votre fichier
+- `git add .`
 - `git commit -m "Update fichier rendu"`
 - `git push`
 
 La merge request devrait traquer automatiquement ce changement.
 
 A la date finale de rendu, je mergerais toutes les merge request pour obtenir le commit final de chacun, qui sera utiliser pour vous noter.
+
+Notez que votre branche `main` va avancer devant la branche `rendu`. Ce n'est pas un problème, l'objectif de la branche rendu est uniquement de me donner l'information de l'url de votre repository et le hash de votre commit final.
 
 ## Exercices de TP
 
