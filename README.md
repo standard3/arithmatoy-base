@@ -15,24 +15,38 @@ Ce repository est destiné à être forké pour pouvoir être modifié ensuite.
 
 Afin de pouvoir vous noter, je clonerais votre repository et j'executerais les tests avec un script. Pour me faciliter cette tache, vous allez me soumettre une merge request me permettant d'avoir la référence sur votre repository et un commit de rendu.
 
-Le dossier `rendu/YYYY` ou `YYYY` est l'année en cours est destiné a contenir un fichier pour chaque rendu. Ce fichier a pour nom `NOM_prenom.txt` et contient deux lignes:
+Le dossier `rendu/`, uniquement présent sur la branche `rendu`, est destiné a contenir un fichier pour chaque rendu. Ce fichier a pour nom `NOM_prenom.txt` et contient deux lignes:
 
 ```
 URL_DU_REPO
 HASH_DU_COMMIT
 ```
 
-Vous trouverez un example dans `rendu/2023/NOEL_laurent.txt`.
+Vous trouverez un example dans `rendu/NOEL_laurent.txt` (https://gitlab.com/maths-2600/arithmatoy-base/-/blob/rendu/rendu/NOEL_laurent.txt) présent sur la branche `rendu`.
 
 Afin de créer et me soumettre ce fichier:
 
-- Placez vous sur la branche de rendu de l'année courante. Example en 2023: `git checkout rendu/2023`. Adaptez selon l'année
-- Créez le fichier vous concernant dans le dossier `rendu/2023/`
+- Placez vous sur la branche de rendu: `git checkout rendu`.
+- Créez le fichier vous concernant dans le dossier `rendu`
 - Pour le HASH_DU_COMMIT vous serez amené à le changer au fur à mesure que vous avancez. Pour obtenir le hash sur commit sur lequel vous êtes:
   - `git rev-parse HEAD`
 - Faites un commit `git commit -m "Ajout fichier rendu"`
 - Pushez `git push`
 - Allez sur Gitlab et créez une merge request: https://gitlab.com/maths-2600/arithmatoy-base/-/merge_requests
+
+Replacez vous ensuite sur la branche `main` pour continuer à travailler: `git checkout main`.
+
+Au fur à mesure que vous avancez, commitez et pushez votre travail. Dès que vous avez assez avancé, vous pouvez vous remettre sur la branche de rendu pour mettre à jour le hash du commit:
+
+- `git rev-parse HEAD` pour copier coller le hash de commit
+- `git checkout rendu`
+- Mettez le hash dans votre fichier
+- `git commit -m "Update fichier rendu"`
+- `git push`
+
+La merge request devrait traquer automatiquement ce changement.
+
+A la date finale de rendu, je mergerais toutes les merge request pour obtenir le commit final de chacun, qui sera utiliser pour vous noter.
 
 ## Exercices de TP
 
