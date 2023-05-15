@@ -106,38 +106,5 @@ Number* arithmatoy_mul(unsigned int base, const Number* lhs, const Number* rhs) 
 
     return result;
 }
-Number* arithmatoy_mul(unsigned int base, const Number* lhs, const Number* rhs) {
-    const char* all_digits = get_all_digits();
-    int* res = calloc(lhs->len + rhs->len, sizeof(int));
 
-    for (size_t i = 0; i < lhs->len; ++i) {
-        for (size_t j = 0; j < rhs->len; ++j) {
-            int digit_lhs = strchr(all_digits, tolower(lhs->number[i])) - all_digits;
-            int digit_rhs = strchr(all_digits, tolower(rhs->number[j])) - all_digits;
-            res[i + j] += digit_lhs * digit_rhs;
-        }
-    }
-
-    for (size_t i = 0; i < lhs->len + rhs->len - 1; ++i) {
-        res[i + 1] += res[i] / base;
-        res[i] %= base;
-    }
-
-    char* res_str = calloc(lhs->len + rhs->len + 1, sizeof(char));
-    size_t res_len = 0;
-
-    for (size_t i = lhs->len + rhs->len; i-- > 0; ) {
-        if (res_str[0] != '\0' || res[i] != 0)
-            res_str[res_len++] = all_digits[res[i]];
-    }
-
-    res_str[res_len] = '\0';
-
-    Number* result = create_number(res_str);
-
-    free(res_str);
-    free(res);
-
-    return result;
-}
 
