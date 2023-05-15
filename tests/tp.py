@@ -1,4 +1,3 @@
-
 def nombre_entier(n: int) -> str:
     if n == 0:
         return "0"
@@ -43,7 +42,6 @@ def fibo_rec(n: int) -> int:
         return 1
     else:
         return fibo_rec(n - 1) + fibo_rec(n - 2)
-
 
 def fibo_ite(n: int) -> int:
     a, b = 0, 1
