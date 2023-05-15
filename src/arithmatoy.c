@@ -107,4 +107,52 @@ Number* arithmatoy_mul(unsigned int base, const Number* lhs, const Number* rhs) 
     return result;
 }
 
+unsigned int get_digit_value(char digit) {
+  if (digit >= '0' && digit <= '9') {
+    return digit - '0';
+  }
+  if (digit >= 'a' && digit <= 'z') {
+    return 10 + (digit - 'a');
+  }
+  return -1;
+}
+
+char to_digit(unsigned int value) {
+  if (value >= ALL_DIGIT_COUNT) {
+    debug_abort("Invalid value for to_digit()");
+    return 0;
+  }
+  return get_all_digits()[value];
+}
+
+char *reverse(char *str) {
+  const size_t length = strlen(str);
+  const size_t bound = length / 2;
+  for (size_t i = 0; i < bound; ++i) {
+    char tmp = str[i];
+    const size_t mirror = length - i - 1;
+    str[i] = str[mirror];
+    str[mirror] = tmp;
+  }
+  return str;
+}
+
+const char *drop_leading_zeros(const char *number) {
+
+  if (*number == '\0') {
+    return number;
+  }
+  while (*number == '0') {
+    ++number;
+  }
+  if (*number == '\0') {
+    --number;
+  }
+  return number;
+}
+
+void debug_abort(const char *debug_msg) {
+  fprintf(stderr, debug_msg);
+  exit(EXIT_FAILURE);
+}
 
