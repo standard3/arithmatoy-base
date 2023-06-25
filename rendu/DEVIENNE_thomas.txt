@@ -1,2 +1,2 @@
-https://gitlab.com/T0my-commits/arithmatoy-base/-/tree/main
+https://gitlab.com/T0my-commits/arithmatoy-base
 f93190220ddf45a52ea3f6e1ec06ce58e7cd36d3
