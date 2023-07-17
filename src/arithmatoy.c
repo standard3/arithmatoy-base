@@ -12,41 +12,102 @@ const size_t ALL_DIGIT_COUNT = 36;
 
 void arithmatoy_free(char *number) { free(number); }
 
+// Function to add two numbers
 char *arithmatoy_add(unsigned int base, const char *lhs, const char *rhs) {
-  if (VERBOSE) {
-    fprintf(stderr, "add: entering function\n");
+  size_t lhs_len = strlen(lhs);
+  size_t rhs_len = strlen(rhs);
+  char *result = (char*)calloc(lhs_len + 1, sizeof(char));
+  int carry = 0;
+
+  for (size_t i = 0; i < lhs_len; i++) {
+    int lhs_digit = lhs[lhs_len - i - 1] - '0';
+    int rhs_digit = (i < rhs_len) ? rhs[rhs_len - i - 1] - '0' : 0;
+    int sum = carry + lhs_digit + rhs_digit;
+
+    carry = sum/base;
+    sum = sum%base;
+
+    result[i] = sum + '0';
   }
 
-  // Fill the function, the goal is to compute lhs + rhs
-  // You should allocate a new char* large enough to store the result as a
-  // string Implement the algorithm Return the result
+  if (carry > 0) {
+    result = realloc(result, lhs_len + 2);
+    result[lhs_len] = carry + '0';
+  }
+
+  reverse(result);
+
+  return result;
 }
 
+// Function to subtract two numbers
 char *arithmatoy_sub(unsigned int base, const char *lhs, const char *rhs) {
-  if (VERBOSE) {
-    fprintf(stderr, "sub: entering function\n");
+  size_t lhs_len = strlen(lhs);
+  size_t rhs_len = strlen(rhs);
+  char *result = (char*)calloc(lhs_len + 1, sizeof(char));
+  int carry = 0;
+
+  for (size_t i = 0; i < lhs_len; i++) {
+    int lhs_digit = lhs[lhs_len - i - 1] - '0';
+    int rhs_digit = (i < rhs_len) ? rhs[rhs_len - i - 1] - '0' : 0;
+    int diff = lhs_digit - rhs_digit - carry;
+
+    if (diff < 0) {
+      diff += base;
+      carry = 1;
+    } else {
+      carry = 0;
+    }
+
+    result[i] = diff + '0';
   }
 
-  // Fill the function, the goal is to compute lhs - rhs (assuming lhs > rhs)
-  // You should allocate a new char* large enough to store the result as a
-  // string Implement the algorithm Return the result
-}
-
-char *arithmatoy_mul(unsigned int base, const char *lhs, const char *rhs) {
-  if (VERBOSE) {
-    fprintf(stderr, "mul: entering function\n");
+  if (carry != 0) {
+    arithmatoy_free(result);
+    return NULL;
   }
 
-  // Fill the function, the goal is to compute lhs * rhs
-  // You should allocate a new char* large enough to store the result as a
-  // string Implement the algorithm Return the result
+  reverse(result);
+
+  return result;
 }
 
-// Here are some utility functions that might be helpful to implement add, sub
-// and mul:
+Number* arithmatoy_mul(unsigned int base, const Number* lhs, const Number* rhs) {
+    const char* all_digits = get_all_digits();
+    int* res = calloc(lhs->len + rhs->len, sizeof(int));
+
+    for (size_t i = 0; i < lhs->len; ++i) {
+        for (size_t j = 0; j < rhs->len; ++j) {
+            int digit_lhs = strchr(all_digits, tolower(lhs->number[i])) - all_digits;
+            int digit_rhs = strchr(all_digits, tolower(rhs->number[j])) - all_digits;
+            res[i + j] += digit_lhs * digit_rhs;
+        }
+    }
+
+    for (size_t i = 0; i < lhs->len + rhs->len - 1; ++i) {
+        res[i + 1] += res[i] / base;
+        res[i] %= base;
+    }
+
+    char* res_str = calloc(lhs->len + rhs->len + 1, sizeof(char));
+    size_t res_len = 0;
+
+    for (size_t i = lhs->len + rhs->len; i-- > 0; ) {
+        if (res_str[0] != '\0' || res[i] != 0)
+            res_str[res_len++] = all_digits[res[i]];
+    }
+
+    res_str[res_len] = '\0';
+
+    Number* result = create_number(res_str);
+
+    free(res_str);
+    free(res);
+
+    return result;
+}
 
 unsigned int get_digit_value(char digit) {
-  // Convert a digit from get_all_digits() to its integer value
   if (digit >= '0' && digit <= '9') {
     return digit - '0';
   }
@@ -57,7 +118,6 @@ unsigned int get_digit_value(char digit) {
 }
 
 char to_digit(unsigned int value) {
-  // Convert an integer value to a digit from get_all_digits()
   if (value >= ALL_DIGIT_COUNT) {
     debug_abort("Invalid value for to_digit()");
     return 0;
@@ -66,8 +126,6 @@ char to_digit(unsigned int value) {
 }
 
 char *reverse(char *str) {
-  // Reverse a string in place, return the pointer for convenience
-  // Might be helpful if you fill your char* buffer from left to right
   const size_t length = strlen(str);
   const size_t bound = length / 2;
   for (size_t i = 0; i < bound; ++i) {
@@ -80,8 +138,7 @@ char *reverse(char *str) {
 }
 
 const char *drop_leading_zeros(const char *number) {
-  // If the number has leading zeros, return a pointer past these zeros
-  // Might be helpful to avoid computing a result with leading zeros
+
   if (*number == '\0') {
     return number;
   }
@@ -95,7 +152,7 @@ const char *drop_leading_zeros(const char *number) {
 }
 
 void debug_abort(const char *debug_msg) {
-  // Print a message and exit
   fprintf(stderr, debug_msg);
   exit(EXIT_FAILURE);
 }
+
