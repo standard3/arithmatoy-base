@@ -2,19 +2,23 @@
 
 
 def nombre_entier(n: int) -> str:
-    pass
+    return "S" * n + "0"
 
 
 def S(n: str) -> str:
-    pass
+    return "S" + n
 
 
 def addition(a: str, b: str) -> str:
-    pass
+    if a == "0":
+        return b
+    return S(addition(a[1:], b))
 
 
 def multiplication(a: str, b: str) -> str:
-    pass
+    if a == "0" or b == "0":
+        return "0"
+    return addition(b, multiplication(a[1:], b))
 
 
 def facto_ite(n: int) -> int:
