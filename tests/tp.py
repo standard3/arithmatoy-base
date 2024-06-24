@@ -58,10 +58,8 @@ def golden_phi(n: int) -> float:
 
 
 def sqrt5(n: int) -> float:
-    x = 5.0
-    for _ in range(n):
-        x = (x + 5 / x) / 2
-    return x
+    phi = golden_phi(n + 1)
+    return 2 * phi - 1
 
 
 def pow(a: float, n: int) -> float:
