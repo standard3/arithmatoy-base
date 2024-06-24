@@ -1,5 +1,8 @@
 #pragma once
 
+#include <stddef.h>
+#include <string.h>
+
 extern int VERBOSE;
 
 const char *get_all_digits();
@@ -11,6 +14,6 @@ char to_digit(unsigned int value);
 
 char *reverse(char *str);
 
-const char *drop_leading_zeros(const char *number);
+char *drop_leading_zeros(const char *number);
 
 void debug_abort(const char *debug_msg);
